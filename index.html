@@ -238,6 +238,8 @@ let score = 0;
 
 let time = 0;
 
+let startTime = null;
+
 
 // ==================================================
 // 玩家
@@ -255,9 +257,7 @@ const player = {
 
     vy: 0,
 
-    jump: false,
-
-    runFrame: 0
+    jump: false
 
 };
 
@@ -292,13 +292,6 @@ let fastSpeed = 3.1;
 let spawnTimer = 0;
 
 let spawnInterval = 220;
-
-
-// ==================================================
-// 跑步动画
-// ==================================================
-
-let lastFrameTime = 0;
 
 
 // ==================================================
@@ -430,6 +423,8 @@ function start(){
 
     time = 0;
 
+    startTime = Date.now();
+
 
     enemies = [];
 
@@ -439,8 +434,6 @@ function start(){
     player.vy = 0;
 
     player.jump = false;
-
-    player.runFrame = 0;
 
 
     spawnTimer = 0;
@@ -562,6 +555,10 @@ function update(){
         return;
 
 
+    // 计算时间 - 只在这里计算一次
+    time = Math.floor((Date.now() - startTime) / 1000);
+
+
     // 背景移动
 
     bgX.sky -= bgSpeed.sky;
@@ -621,8 +618,6 @@ function update(){
 
 
     // 难度增加
-
-    time = Math.floor(Date.now() / 1000);
 
     if(time > 0 && time % 10 === 0){
 
