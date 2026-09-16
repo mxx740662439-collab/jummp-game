@@ -95,18 +95,18 @@ player:{
 
 run:[
 
-load("assets/player/run_01.PNG"),
+load("assets/player/run_01.png"),
 
-load("assets/player/run_02.PNG"),
+load("assets/player/run_02.png"),
 
-load("assets/player/run_03.PNG")
+load("assets/player/run_03.png")
 
 ],
 
 
 jump:
 
-load("assets/player/jump.PNG")
+load("assets/player/jump.png")
 
 },
 
@@ -118,11 +118,11 @@ load("assets/player/jump.PNG")
 enemy:[
 
 
-load("assets/enemy/enemy_01.PNG"),
+load("assets/enemy/enemy_01.png"),
 
 load("assets/enemy/enemy_02.png"),
 
-load("assets/enemy/enemy_03.PNG")
+load("assets/enemy/enemy_03.png")
 
 ],
 
@@ -173,26 +173,26 @@ ui:{
 
 musicOn:
 
-load("assets/ui/music_on.PNG"),
+load("assets/ui/music_on.png"),
 
 
 
 musicOff:
 
-load("assets/ui/music_off.PNG"),
+load("assets/ui/music_off.png"),
 
 
 
 
 score:
 
-load("assets/ui/icon_score.PNG"),
+load("assets/ui/icon_score.png"),
 
 
 
 time:
 
-load("assets/ui/icon_time.PNG"),
+load("assets/ui/icon_time.png"),
 
 
 
@@ -210,13 +210,13 @@ load("assets/ui/button_start.png"),
 
 gameover:
 
-load("assets/ui/panel_gameover.PNG"),
+load("assets/ui/panel_gameover.png"),
 
 
 
 restart:
 
-load("assets/ui/button_restart.PNG")
+load("assets/ui/button_restart.png")
 
 
 
@@ -224,6 +224,10 @@ load("assets/ui/button_restart.PNG")
 
 
 };
+
+
+
+
 
 
 
@@ -253,16 +257,21 @@ ground:0
 let bgSpeed={
 
 
-sky:0.4,
+sky:0.8,
 
-far:1.2,
+far:3.2,
 
-near:2.6,
+near:6.4,
 
-ground:4.8
+ground:9.6
 
 
 };
+
+
+
+
+
 
 
 
@@ -290,6 +299,7 @@ a.play().catch(()=>{});
 
 
 }
+
 
 
 
@@ -324,6 +334,11 @@ bgm.pause();
 
 
 
+
+
+
+
+
 // =====================
 // 游戏参数
 // =====================
@@ -337,6 +352,9 @@ let score=0;
 
 
 let time=0;
+
+
+
 
 
 
@@ -367,15 +385,22 @@ jump:false
 
 
 
+
+
+
 // 跳跃参数
 
-let jumpPower=-8;
+let jumpPower=-10;
 
 
-let riseGravity=0.2;
+let riseGravity=0.3;
 
 
-let fallGravity=0.4;
+let fallGravity=0.5;
+
+
+
+
 
 
 
@@ -384,17 +409,17 @@ let enemies=[];
 
 
 
-let normalSpeed=3.6;
+let normalSpeed=9;
 
 
-let fastSpeed=6.2;
+let fastSpeed=16;
 
 
 
 let spawnTimer=0;
 
 
-let spawnInterval=220;
+let spawnInterval=60;
 
 
 
@@ -424,6 +449,7 @@ let y=e.clientY-rect.top;
 
 
 
+
 // 音乐按钮
 
 
@@ -443,6 +469,7 @@ return;
 
 
 }
+
 
 
 
@@ -482,12 +509,19 @@ return;
 
 
 
+
 jump();
 
 
 }
 
 );
+
+
+
+
+
+
 
 
 
@@ -515,6 +549,7 @@ return;
 
 
 
+
 if(state==="PLAYING" && !player.jump){
 
 
@@ -534,6 +569,11 @@ playSound("jumpSound");
 
 
 }
+
+
+
+
+
 
 
 
@@ -562,6 +602,7 @@ enemies=[];
 
 
 
+
 player.y=270;
 
 
@@ -573,14 +614,17 @@ player.jump=false;
 
 
 
+
 spawnTimer=0;
 
 
-spawnInterval=220;
+spawnInterval=150;
 
 
 
 startTime=Date.now();
+
+
 
 
 
@@ -607,6 +651,10 @@ bgm.play().catch(()=>{});
 
 
 
+
+
+
+
 function restart(){
 
 
@@ -614,6 +662,11 @@ start();
 
 
 }
+
+
+
+
+
 
 
 
@@ -645,6 +698,10 @@ speed=normalSpeed;
 
 
 }
+
+
+
+
 
 
 
@@ -691,6 +748,11 @@ Math.random()*3
 
 
 
+
+
+
+
+
 // =====================
 // 碰撞
 // =====================
@@ -723,6 +785,13 @@ a.y+a.h > b.y
 
 
 
+
+
+
+
+
+
+
 // =====================
 // 更新
 // =====================
@@ -739,11 +808,16 @@ return;
 
 
 
+
+
 time=Math.floor(
 
 (Date.now()-startTime)/1000
 
 );
+
+
+
 
 
 
@@ -764,6 +838,8 @@ bgX.near-=bgSpeed.near;
 
 
 bgX.ground-=bgSpeed.ground;
+
+
 
 
 
@@ -790,7 +866,12 @@ bgX.near=0;
 
 if(bgX.ground<=-512)
 
-bgX.ground+=512;
+bgX.ground=0;
+
+
+
+
+
 
 
 
@@ -827,6 +908,8 @@ player.y+=player.vy;
 
 
 
+
+
 if(player.y>=270){
 
 
@@ -846,6 +929,12 @@ player.jump=false;
 
 
 
+
+
+
+
+
+
 // ---------------------
 // 难度增加
 // ---------------------
@@ -855,27 +944,32 @@ if(time>0 && time%10===0){
 
 
 
-if(normalSpeed<2.5){
+if(normalSpeed<12){
 
 
-normalSpeed+=0.002;
-
-
-}
-
-
-
-if(fastSpeed<4.5){
-
-
-fastSpeed+=0.003;
+normalSpeed+=0.004;
 
 
 }
 
 
 
+if(fastSpeed<18){
+
+
+fastSpeed+=0.006;
+
+
 }
+
+
+
+}
+
+
+
+
+
 
 
 
@@ -903,13 +997,18 @@ spawnTimer=0;
 
 spawnInterval=
 
-160+
+50+
 
-Math.random()*150;
+Math.random()*100;
 
 
 
 }
+
+
+
+
+
 
 
 
@@ -928,6 +1027,8 @@ e.x-=e.speed;
 
 
 
+
+
 if(e.x<-80){
 
 
@@ -941,6 +1042,9 @@ score++;
 
 
 }
+
+
+
 
 
 
@@ -963,7 +1067,6 @@ gameOver();
 
 
 }
-
 // =====================
 // 游戏结束
 // =====================
@@ -996,6 +1099,11 @@ playSound("gameoverSound");
 
 
 
+
+
+
+
+
 // =====================
 // 绘制
 // =====================
@@ -1016,6 +1124,8 @@ ctx.clearRect(
 400
 
 );
+
+
 
 
 
@@ -1061,6 +1171,8 @@ bgX.sky+800,
 
 
 
+
+
 // 远景
 
 ctx.drawImage(
@@ -1096,6 +1208,9 @@ bgX.far+800,
 
 
 
+
+
+
 // 近景
 
 ctx.drawImage(
@@ -1127,6 +1242,10 @@ bgX.near+800,
 150
 
 );
+
+
+
+
 
 
 
@@ -1169,6 +1288,11 @@ bgX.ground+512,
 
 
 
+
+
+
+
+
 // =====================
 // 玩家动画
 // =====================
@@ -1207,6 +1331,9 @@ img.player.run[frame];
 
 
 
+
+
+
 ctx.drawImage(
 
 
@@ -1226,6 +1353,11 @@ player.y-50,
 
 
 );
+
+
+
+
+
 
 
 
@@ -1262,6 +1394,11 @@ e.y-40,
 
 
 });
+
+
+
+
+
 
 
 
@@ -1307,6 +1444,11 @@ score,
 
 
 
+
+
+
+
+
 // =====================
 // TIME
 // =====================
@@ -1341,6 +1483,11 @@ time,
 
 
 
+
+
+
+
+
 // =====================
 // 音乐按钮
 // =====================
@@ -1367,6 +1514,11 @@ img.ui.musicOff,
 
 
 );
+
+
+
+
+
 
 
 
@@ -1403,6 +1555,8 @@ img.ui.title,
 
 
 
+
+
 ctx.drawImage(
 
 
@@ -1426,6 +1580,11 @@ img.ui.start,
 
 
 }
+
+
+
+
+
 
 
 
@@ -1462,6 +1621,7 @@ img.ui.gameover,
 
 
 
+
 ctx.drawImage(
 
 
@@ -1489,6 +1649,11 @@ img.ui.restart,
 
 
 }
+
+
+
+
+
 
 
 
@@ -1526,5 +1691,6 @@ loop();
 
 
 </body>
+
 
 </html>
