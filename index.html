@@ -257,13 +257,13 @@ ground:0
 let bgSpeed={
 
 
-sky:0.8,
+sky:0.2,
 
-far:3.2,
+far:0.6,
 
-near:6.4,
+near:1.3,
 
-ground:9.6
+ground:2.4
 
 
 };
@@ -390,13 +390,13 @@ jump:false
 
 // 跳跃参数
 
-let jumpPower=-10;
+let jumpPower=-8;
 
 
-let riseGravity=0.3;
+let riseGravity=0.18;
 
 
-let fallGravity=0.5;
+let fallGravity=0.25;
 
 
 
@@ -409,17 +409,17 @@ let enemies=[];
 
 
 
-let normalSpeed=9;
+let normalSpeed=1.8;
 
 
-let fastSpeed=16;
+let fastSpeed=3.1;
 
 
 
 let spawnTimer=0;
 
 
-let spawnInterval=60;
+let spawnInterval=220;
 
 
 
@@ -618,7 +618,7 @@ player.jump=false;
 spawnTimer=0;
 
 
-spawnInterval=150;
+spawnInterval=220;
 
 
 
@@ -866,7 +866,7 @@ bgX.near=0;
 
 if(bgX.ground<=-512)
 
-bgX.ground=0;
+bgX.ground+=512;
 
 
 
@@ -944,20 +944,20 @@ if(time>0 && time%10===0){
 
 
 
-if(normalSpeed<6){
+if(normalSpeed<2.5){
 
 
-normalSpeed+=0.004;
+normalSpeed+=0.002;
 
 
 }
 
 
 
-if(fastSpeed<9){
+if(fastSpeed<4.5){
 
 
-fastSpeed+=0.006;
+fastSpeed+=0.003;
 
 
 }
@@ -997,9 +997,9 @@ spawnTimer=0;
 
 spawnInterval=
 
-50+
+160+
 
-Math.random()*100;
+Math.random()*150;
 
 
 
